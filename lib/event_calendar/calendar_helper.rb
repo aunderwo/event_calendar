@@ -114,41 +114,32 @@ module EventCalendar
       cal = ""
 
       # outer calendar container
-      cal << %(<div class="ec-calendar")
-      cal << %(style="width: #{options[:width]}px;") if options[:width]
-      cal << %(>)
 
-      # table header, including the monthname and links to prev & next month
+      # calendar header, including the monthname and links to prev & next month
       if options[:show_header]
-        cal << %(<table class="ec-calendar-header" cellpadding="0" cellspacing="0">)
-        cal << %(<thead><tr>)
+        cal << %(<div class="calendar-head">)
         if options[:previous_month_text] or options[:next_month_text]
-          cal << %(<th colspan="2" class="ec-month-nav ec-previous-month">#{options[:previous_month_text]}</th>)
-          colspan = 3
-        else
-          colspan = 7
+          cal << %(<div class="calendar-col prev-month">#{options[:previous_month_text]}</div>)
         end
-        cal << %(<th colspan="#{colspan}" class="ec-month-name">#{options[:month_name_text]}</th>)
+        cal << %(<div class="calendar-col current-month">#{options[:month_name_text]}</div>)
         if options[:next_month_text]
-          cal << %(<th colspan="2" class="ec-month-nav ec-next-month">#{options[:next_month_text]}</th>)
+          cal << %(<div class="calendar-col next-month">#{options[:next_month_text]}</div>)
         end
-        cal << %(</tr></thead></table>)
+        cal << %(</div>)
       end
 
       # body container (holds day names and the calendar rows)
-      cal << %(<div class="ec-body" style="height: #{height}px;">)
+      cal << %(<div class="calendar-data">)
 
       # day names
-      cal << %(<table class="ec-day-names" style="height: #{options[:day_names_height]}px;" cellpadding="0" cellspacing="0">)
-      cal << %(<tbody><tr>)
+      cal << %(<div class="calender-days">)
       day_names.each do |day_name|
-        cal << %(<th class="ec-day-name" title="#{day_name}">#{day_name}</th>)
+        cal << %(<div class="calender-day">#{day_name}</div>)
       end
-      cal << %(</tr></tbody></table>)
+      cal << %(</div>)
 
-      # container for all the calendar rows
-      cal << %(<div class="ec-rows" style="top: #{options[:day_names_height]}px; )
-      cal << %(height: #{height - options[:day_names_height]}px;">)
+      # clear before calendar rows
+      cal << %(<div class="clear"></div>)
 
       # initialize loop variables
       first_day_of_week = beginning_of_week(first, options[:first_day_of_week])
